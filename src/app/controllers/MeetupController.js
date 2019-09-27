@@ -103,6 +103,26 @@ class MeetupController {
       return res.status(500).json({ error: err.message || 'wtf!?' });
     }
   }
+
+  async delete(req, res) {
+    try {
+      const meetup = await Meetup.findByPk(req.params.id);
+
+      if (!meetup) {
+        return res.status(404).json({ error: "This meetup don't exists." });
+      }
+
+      if (meetup.user_id !== req.userId) {
+        return res.status(403).json({ error: 'Access denied.' });
+      }
+
+      await meetup.destroy();
+
+      return res.json();
+    } catch (err) {
+      return res.status(500).json({ error: err.message || 'wtf!?' });
+    }
+  }
 }
 
 export default new MeetupController();
