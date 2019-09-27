@@ -9,7 +9,7 @@
 			"name": "Users",
 			"item": [
 				{
-					"name": "Criar usuário",
+					"name": "create",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -37,7 +37,7 @@
 					"response": []
 				},
 				{
-					"name": "Atualizar usuário",
+					"name": "update",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -81,7 +81,7 @@
 			"name": "Session",
 			"item": [
 				{
-					"name": "Criar sessão",
+					"name": "create",
 					"event": [
 						{
 							"listen": "test",
@@ -132,7 +132,7 @@
 			"name": "Files",
 			"item": [
 				{
-					"name": "Enviar arquivo",
+					"name": "create",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -163,6 +163,154 @@
 							],
 							"path": [
 								"files"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Meetups",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Iniciando com Node + Postgres\",\n    \"description\": \"Meetup para iniciantes em bancos realcionais com nodejs\",\n    \"banner_id\": \"3\",\n    \"location\": \"Campinas/SP\",\n    \"date\": \"2019-12-27T13:32:48.054Z\",\n    \"whatever\": \"whatever\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/meetups",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"meetups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Iniciando com Node + Redis\",\n    \"description\": \"Meetup para iniciantes em Redis e nodejs\",\n    \"banner_id\": \"3\",\n    \"location\": \"Campinas/SP\",\n    \"date\": \"2019-12-27T13:32:48.054Z\",\n    \"whatever\": \"whatever\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/meetups/24",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"meetups",
+								"24"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Iniciando com Node + Redis\",\n    \"description\": \"Meetup para iniciantes em Redis e nodejs\",\n    \"banner_id\": \"3\",\n    \"location\": \"Campinas/SP\",\n    \"date\": \"2019-12-27T13:32:48.054Z\",\n    \"whatever\": \"whatever\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/meetups/5",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"meetups",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/meetups",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"meetups"
 							]
 						}
 					},
