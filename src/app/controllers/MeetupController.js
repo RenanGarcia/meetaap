@@ -1,8 +1,30 @@
 import * as Yup from 'yup';
 import { isBefore, parseISO } from 'date-fns';
+import { Op } from 'sequelize';
 import Meetup from '../models/Meetup';
+import File from '../models/File';
 
 class MeetupController {
+  async index(req, res) {
+    try {
+      const meetups = await Meetup.findAll({
+        attributes: { exclude: ['user_id', 'banner_id'] },
+        where: { user_id: { [Op.eq]: req.userId } },
+        include: [
+          {
+            model: File,
+            as: 'banner',
+            attributes: ['id', 'path'],
+          },
+        ],
+      });
+
+      return res.json(meetups);
+    } catch (err) {
+      return res.status(500).json({ error: err.message || 'wtf!?' });
+    }
+  }
+
   async store(req, res) {
     try {
       const schema = Yup.object().shape({
