@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { isBefore, parseISO } from 'date-fns';
 import Meetup from '../models/Meetup';
 
 class MeetupController {
@@ -13,7 +14,20 @@ class MeetupController {
       });
 
       if (!(await schema.isValid(req.body))) {
-        return res.status(400).json({ error: 'Validation fails' });
+        return res.status(400).json({ error: 'Validation fails.' });
+      }
+
+      const parsedDate = parseISO(req.body.date);
+
+      // eslint-disable-next-line eqeqeq
+      if (parsedDate == 'Invalid Date') {
+        return res.status(400).json({ error: 'Invalid Date.' });
+      }
+
+      if (isBefore(parsedDate, new Date())) {
+        return res
+          .status(400)
+          .json({ error: 'Only future dates are accepted.' });
       }
 
       const meetup = await Meetup.create({ ...req.body, user_id: req.userId });
